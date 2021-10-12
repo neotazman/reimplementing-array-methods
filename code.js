@@ -3,6 +3,7 @@
 const dummyArray2 = [6, 4, 8]
 const dummyArray = [1, 4, -6, 'a', 'jello', 24, false];
 
+//basic challenge
 const newIncludes = (array, value) => { //loops through the array to find the value
     for (let i = 0; i < array.length; i++) {
         if(array[i] === value) {
@@ -24,8 +25,8 @@ const newConcat = (array1, array2) => { //loops through both arrays and adds the
 }
 
 const newJoin = (array, separator) => { //turns the array into a string separated by the separator
-    if(typeof separator !== 'string') { //makes sure the separator is a string
-        return null
+    if(typeof separator !== 'string' || !separator) { //if the separator is not a string, or does not exist, it sets it as an empty string
+        separator = ''
     }
 
     let newArray = []
@@ -53,3 +54,41 @@ const newJoin = (array, separator) => { //turns the array into a string separate
     }
     return newString
 }
+
+//intermediate challenge
+const newSome = (array, functionToPass) => { //calls the functionToPass for each index of the array and returns true if it succeeds
+    for(let i = 0; i < array.length; i++) {
+        if(functionToPass(array[i])) {
+            return true
+        }
+    }
+    return false //if the entire loop runs without returning true, it returns false
+}
+
+const newFindIndex = (array, functionToPass) => { //calls the functionToPass for each index of the array and returns the index
+    for (let i = 0; i < array.length; i++) {
+        if(functionToPass[array[i]]) {
+            return i
+        }
+    }
+    return -1 //if it doesn't return anything, it returns -1
+}
+
+const newMap = (array, callback) => { //loops through the array, calls the callback function and returns the new array with the results of the callback function
+    let newArray = []
+    for (let i = 0; i < array.length; i++) {
+        newArray.push(callback(array[i]))
+    }
+    return newArray
+}
+
+const newFilter = (array, functionToPass) => {
+    let newArray = []
+    for(let i = 0; i < array.length; i++) {
+        if(functionToPass(array[i])) {
+            newArray.push(array[i])
+        }
+    }
+    return newArray
+}
+
