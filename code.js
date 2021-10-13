@@ -17,7 +17,7 @@ const newIncludes = (array, value, fromIndex) => { //loops through the array to 
     return false; //if it goes through the entire array, and doesn't return true, it returns false
 }
 
-const newConcat = (array1, array2, ...arrays) => { //loops through both arrays and adds them to a new array
+const newConcat = (array1, array2, ...arrays) => { //loops through all arrays and adds them to a new array
     let newArray = []
     console.log(typeof array1)
     if(typeof array1 !== 'object') { //arrays are objects. if it's not an object, the value can be pushed as is
@@ -117,3 +117,24 @@ const newFilter = (array, callback) => { //loops through the array and creates a
     return newArray
 }
 
+//unit tests
+console.log(newIncludes(dummyArray, 4))
+console.log(newIncludes(dummyArray2, 4, 2))
+
+console.log(newConcat(dummyArray, dummyArray2))
+console.log(newConcat(dummyArray, 7, 'tarzan', dummyArray3, 'superman', dummyArray2))
+
+console.log(newJoin(dummyArray2))
+console.log(newJoin(dummyArray, ', or better yet '))
+
+console.log(newSome(dummyArray, (element) => typeof element === 'boolean'))
+console.log(newSome(dummyArray3, (element) => element % 2 !== 0))
+
+console.log(newFindIndex(dummyArray, (element) => element === 'jello'))
+console.log(newFindIndex(dummyArray3, (element) => element === 'tarzan'))
+
+console.log(newMap(dummyArray, (element) => JSON.stringify(element)))
+console.log(newMap(dummyArray3, (element) => element % 3 || parseInt(element) || null))
+
+console.log(newFilter(dummyArray, (element) => typeof element === 'string'))
+console.log(newFilter(dummyArray3, (element) => element % 2 === 1))

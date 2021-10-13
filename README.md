@@ -12,4 +12,4 @@ _(Instructions for how to install the unit testing framework and run the unit te
 
 For a software developer, what are the benefits of good unit tests? Are there any drawbacks to writing unit tests?
 
-_(Put your reflection answer here.)_
+good unit tests show that the functions are working. sometimes writing your own unit tests don't account for edge cases, but i think i did fairly well
