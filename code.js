@@ -5,7 +5,7 @@ const dummyArray = [1, 4, -6, 'a', 'jello', 24, false];
 
 //basic challenge
 const newIncludes = (array, value, fromIndex) => { //loops through the array to find the value
-    if(!fromIndex) { //since fromIndex is an optional parameter, if it doesn't exist, it is set to 0
+    if(!fromIndex || typeof fromIndex !== 'number') { //since fromIndex is an optional parameter, if it doesn't exist, it is set to 0
         fromIndex = 0
     }
     for (let i = fromIndex; i < array.length; i++) {
@@ -48,8 +48,10 @@ const newConcat = (array1, array2, ...arrays) => { //loops through both arrays a
 }
 
 const newJoin = (array, separator) => { //turns the array into a string separated by the separator
-    if(typeof separator !== 'string' || !separator) { //if the separator is not a string, or does not exist, it sets it as an empty string
-        separator = ''
+    if(!separator) { //if the separator does not exist, it sets it as a comma
+        separator = ','
+    } else if(typeof separator !== 'string') { //if the separator is not a string, it turns it into a string
+        separator = JSON.stringify(separator)
     }
 
     let newArray = []
@@ -66,7 +68,6 @@ const newJoin = (array, separator) => { //turns the array into a string separate
 
     if(newArray.length === 1) { //if the array has exactly one value, it just returns the one value without the separator
         newString += newArray[0]
-        return newString
     } else { //loops through each value of the newArray and concatenates it with the separator
         for(let i = 0; i < newArray.length; i++) {
             newString += newArray[i]
