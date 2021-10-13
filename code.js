@@ -1,11 +1,14 @@
 // Your Code Here.
-
+const dummyArray3 = ['jsd', 5, 221, '96', 'pudding']
 const dummyArray2 = [6, 4, 8]
 const dummyArray = [1, 4, -6, 'a', 'jello', 24, false];
 
 //basic challenge
-const newIncludes = (array, value) => { //loops through the array to find the value
-    for (let i = 0; i < array.length; i++) {
+const newIncludes = (array, value, fromIndex) => { //loops through the array to find the value
+    if(!fromIndex) { //since fromIndex is an optional parameter, if it doesn't exist, it is set to 0
+        fromIndex = 0
+    }
+    for (let i = fromIndex; i < array.length; i++) {
         if(array[i] === value) {
             return true;
         }
@@ -13,14 +16,34 @@ const newIncludes = (array, value) => { //loops through the array to find the va
     return false; //if it goes through the entire array, and doesn't return true, it returns false
 }
 
-const newConcat = (array1, array2) => { //loops through both arrays and adds them to a new array
+const newConcat = (array1, array2, ...arrays) => { //loops through both arrays and adds them to a new array
     let newArray = []
-    for (let i = 0; i < array1.length; i++) {
-        newArray.push(array1[i])
+    console.log(typeof array1)
+    if(typeof array1 !== 'object') { //arrays are objects. if it's not an object, the value can be pushed as is
+        newArray.push(array1)
+    } else {
+        for (let i = 0; i < array1.length; i++) {
+            newArray.push(array1[i])
+        }
     }
-    for (let i = 0; i < array2.length; i++) {
-        newArray.push(array2[i])
+    if(typeof array2 !== 'object') {
+        newArray.push(array2)
+    } else {
+        for (let i = 0; i < array2.length; i++) {
+            newArray.push(array2[i])
+        }
     }
+
+    for(let i = 0; i < arrays.length; i++) { //rest parameters are for an unknown number of parameters. assisted by elizabeth scheidt
+        if(typeof arrays[i] !== 'object') {
+            newArray.push(arrays[i])
+        } else {
+            for (let j = 0; j < arrays[i].length; j++) {
+                newArray.push(arrays[i][j])
+            }            
+        }
+    }
+
     return newArray
 }
 
