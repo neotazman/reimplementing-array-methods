@@ -2,6 +2,7 @@
 const dummyArray3 = ['jsd', 5, 221, '96', 'pudding']
 const dummyArray2 = [6, 4, 8]
 const dummyArray = [1, 4, -6, 'a', 'jello', 24, false];
+const dummyFunction = (element) => element > 0 && typeof element !== 'string'
 
 //basic challenge
 const newIncludes = (array, value, fromIndex) => { //loops through the array to find the value
@@ -80,18 +81,18 @@ const newJoin = (array, separator) => { //turns the array into a string separate
 }
 
 //intermediate challenge
-const newSome = (array, functionToPass) => { //calls the functionToPass for each index of the array and returns true if it succeeds
+const newSome = (array, callback) => { //calls the callback for each index of the array and returns true if it succeeds
     for(let i = 0; i < array.length; i++) {
-        if(functionToPass(array[i])) {
+        if(callback(array[i])) {
             return true
         }
     }
     return false //if the entire loop runs without returning true, it returns false
 }
 
-const newFindIndex = (array, functionToPass) => { //calls the functionToPass for each index of the array and returns the index
+const newFindIndex = (array, callback) => { //calls the callback for each index of the array and returns the index
     for (let i = 0; i < array.length; i++) {
-        if(functionToPass[array[i]]) {
+        if(callback(array[i])) {
             return i
         }
     }
@@ -106,10 +107,10 @@ const newMap = (array, callback) => { //loops through the array, calls the callb
     return newArray
 }
 
-const newFilter = (array, functionToPass) => {
+const newFilter = (array, callback) => { //loops through the array and creates a new array of values that pass the callback function
     let newArray = []
     for(let i = 0; i < array.length; i++) {
-        if(functionToPass(array[i])) {
+        if(callback(array[i])) {
             newArray.push(array[i])
         }
     }
