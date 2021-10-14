@@ -135,20 +135,20 @@ const newReduce = (array, callback, initialValue) => { //i'm not too familiar wi
 }
 
 const newFlat = (array, depth) => {
-    if(!depth || typeof depth !== 'number') {
+    if(!depth || typeof depth !== 'number') { //depth needs to be a number
         depth = 1
     }
-    let newArray = [...array]
-    for(let j = 0; j < depth; j++) {
-        let tempArray = []
+    let newArray = [...array] //making a new container for the array to update it as the function runs
+    for(let j = 0; j < depth; j++) { //if depth is 0, it doesn't run
+        let tempArray = [] //can't use newArray if i plan on changing it
         for (let i = 0; i < newArray.length; i++) {
-            if(Array.isArray(newArray[i])) {
+            if(Array.isArray(newArray[i])) { //if it's an array, it spreads the array into the temp array, thanks to elizabeth scheidt for the array checker
                 tempArray.push(...newArray[i])
-            } else {
+            } else { //if it's not an array, it adds the value normally
                 tempArray.push(newArray[i])
             }
         }
-        newArray = [...tempArray]
+        newArray = [...tempArray] //sets the new array to the current temp array NOT .push because that will keep adding new values to the array
     }
     return newArray
 }
