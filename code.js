@@ -186,4 +186,4 @@ console.log(newReduce(dummyArray3, (a, b) => a + b))
 console.assert(newReduce(dummyArray2, (a, b) => a + b) === 18, 'newReduce is not running correctly')
 
 console.log(newFlat(roundArray, 2))
-console.assert(JSON.stringify(newFlat(roundArray, 3)) === JSON.stringify([4, 8, 9, 6, 8, 3, 2, 1, 0, 2, 3]), 'newFlat is not running correctly')
+console.assert(JSON.stringify(newFlat(roundArray, Infinity)) === JSON.stringify([4, 8, 9, 6, 8, 3, 2, 1, 0, 2, 3]), 'newFlat is not running correctly')
