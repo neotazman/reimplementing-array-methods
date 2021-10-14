@@ -19,15 +19,14 @@ const newIncludes = (array, value, fromIndex) => { //loops through the array to 
 
 const newConcat = (array1, array2, ...arrays) => { //loops through all arrays and adds them to a new array
     let newArray = []
-    console.log(typeof array1)
-    if(typeof array1 !== 'object') { //arrays are objects. if it's not an object, the value can be pushed as is
+    if(!Array.isArray(array1)) { //arrays are objects. if it's not an object, the value can be pushed as is
         newArray.push(array1)
     } else {
         for (let i = 0; i < array1.length; i++) {
             newArray.push(array1[i])
         }
     }
-    if(typeof array2 !== 'object') {
+    if(!Array.isArray(array2)) {
         newArray.push(array2)
     } else {
         for (let i = 0; i < array2.length; i++) {
@@ -83,7 +82,7 @@ const newJoin = (array, separator) => { //turns the array into a string separate
 //intermediate challenge
 const newSome = (array, callback) => { //calls the callback for each index of the array and returns true if it succeeds
     for(let i = 0; i < array.length; i++) {
-        if(callback(array[i])) {
+        if(callback(array[i], i, array)) {
             return true
         }
     }
@@ -92,7 +91,7 @@ const newSome = (array, callback) => { //calls the callback for each index of th
 
 const newFindIndex = (array, callback) => { //calls the callback for each index of the array and returns the index
     for (let i = 0; i < array.length; i++) {
-        if(callback(array[i])) {
+        if(callback(array[i], i, array)) {
             return i
         }
     }
@@ -102,7 +101,7 @@ const newFindIndex = (array, callback) => { //calls the callback for each index 
 const newMap = (array, callback) => { //loops through the array, calls the callback function and returns the new array with the results of the callback function
     let newArray = []
     for (let i = 0; i < array.length; i++) {
-        newArray.push(callback(array[i]))
+        newArray.push(callback(array[i], i, array))
     }
     return newArray
 }
@@ -110,7 +109,7 @@ const newMap = (array, callback) => { //loops through the array, calls the callb
 const newFilter = (array, callback) => { //loops through the array and creates a new array of values that pass the callback function
     let newArray = []
     for(let i = 0; i < array.length; i++) {
-        if(callback(array[i])) {
+        if(callback(array[i], i, array)) {
             newArray.push(array[i])
         }
     }
@@ -119,22 +118,22 @@ const newFilter = (array, callback) => { //loops through the array and creates a
 
 //unit tests
 console.log(newIncludes(dummyArray, 4))
-console.log(newIncludes(dummyArray2, 4, 2))
+console.assert(newIncludes(dummyArray, 4) === true, "newIncludes did not return true when the item is in the array")
 
 console.log(newConcat(dummyArray, dummyArray2))
-console.log(newConcat(dummyArray, 7, 'tarzan', dummyArray3, 'superman', dummyArray2))
+console.assert(JSON.stringify(newConcat(dummyArray, dummyArray2)) === JSON.stringify([1, 4, -6, 'a', 'jello', 24, false, 6, 4, 8]), "newConcat did not concatenate the arrays")
 
-console.log(newJoin(dummyArray2))
 console.log(newJoin(dummyArray, ', or better yet '))
+console.assert(newJoin(dummyArray2) === '6,4,8', 'newJoin did not output a string')
 
 console.log(newSome(dummyArray, (element) => typeof element === 'boolean'))
-console.log(newSome(dummyArray3, (element) => element % 2 !== 0))
+console.assert(newSome(dummyArray3, (element) => typeof element === 'string'), 'newSome did not return true when the callback passed')
 
 console.log(newFindIndex(dummyArray, (element) => element === 'jello'))
-console.log(newFindIndex(dummyArray3, (element) => element === 'tarzan'))
+console.assert(newFindIndex(dummyArray3, (element) => element === 'tarzan') === -1, 'newFindIndex did not return -1 when it failed')
 
 console.log(newMap(dummyArray, (element) => JSON.stringify(element)))
-console.log(newMap(dummyArray3, (element) => element % 3 || parseInt(element) || null))
+console.assert(Array.isArray(newMap(dummyArray3, (element) => element % 3 || parseInt(element) || null)), 'newMap did not return an array')
 
 console.log(newFilter(dummyArray, (element) => typeof element === 'string'))
-console.log(newFilter(dummyArray3, (element) => element % 2 === 1))
+console.assert(JSON.stringify(newFilter(dummyArray3, (element) => element % 2 === 1)) === JSON.stringify([5, 221]), 'newFilter did not return a filtered array')
