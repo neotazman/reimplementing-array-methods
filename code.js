@@ -99,6 +99,8 @@ const newFindIndex = (array, callback) => { //calls the callback for each index 
     return -1 //if it doesn't return anything, it returns -1
 }
 
+//
+
 const newMap = (array, callback) => { //loops through the array, calls the callback function and returns the new array with the results of the callback function
     let newArray = []
     for (let i = 0; i < array.length; i++) {
@@ -149,11 +151,14 @@ const newFlat = (array, depth) => {
             }
         }
         newArray = [...tempArray] //sets the new array to the current temp array NOT .push because that will keep adding new values to the array
+        if(newFindIndex(newArray, (element) => Array.isArray(element)) === -1) {
+            break
+        }
     }
     return newArray
 }
 
-//[5, 65, 8, 96, 78, 56, 84, 92, [6, 7, 8]]
+//[5, 65, 8, 96, 78, 56, 84, 92, [6, 7, 8]] newArray.findIndex((element) => Array.isArray(element))
 
 //unit tests
 console.log(newIncludes(dummyArray, 4))
