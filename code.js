@@ -116,6 +116,44 @@ const newFilter = (array, callback) => { //loops through the array and creates a
     return newArray
 }
 
+//advanced challenge
+const newReduce = (array, callback, initialValue) => { //i'm not too familiar with reduce, but i think this works
+    let previousValue
+    if(initialValue) {
+        previousValue = initialValue 
+        for (let i = 0; i < array.length; i++) {
+            previousValue = callback(previousValue, array[i], i, array)
+        }
+    } else {
+        previousValue = array[0]
+        for(let i = 1; i < array.length; i++) { //if there's no initial value, the loop runs one less time
+            previousValue = callback(previousValue, array[i], i, array)
+        }
+    }
+    return previousValue //i know this doesn't make sense from a glance, but that's the variable that i created
+}
+
+const newFlat = (array, depth) => {
+    if(!depth || typeof depth !== 'number') {
+        depth = 1
+    }
+    let newArray = [...array]
+    for(let j = 0; j < depth; j++) {
+        let tempArray=[]
+        for (let i = 0; i < newArray.length; i++) {
+            if(Array.isArray(newArray[i])) {
+                tempArray.push(...newArray[i])
+            } else {
+                tempArray.push(newArray[i])
+            }
+        }
+        newArray = [...tempArray]
+    }
+    return newArray
+}
+
+//[5, 65, 8, 96, 78, 56, 84, 92, [6, 7, 8]]
+
 //unit tests
 console.log(newIncludes(dummyArray, 4))
 console.assert(newIncludes(dummyArray, 4) === true, "newIncludes did not return true when the item is in the array")
@@ -137,3 +175,6 @@ console.assert(Array.isArray(newMap(dummyArray3, (element) => element % 3 || par
 
 console.log(newFilter(dummyArray, (element) => typeof element === 'string'))
 console.assert(JSON.stringify(newFilter(dummyArray3, (element) => element % 2 === 1)) === JSON.stringify([5, 221]), 'newFilter did not return a filtered array')
+
+console.log(newReduce(dummyArray3, (a, b) => a + b))
+console.assert(newReduce(dummyArray2, (a, b) => a + b) === 18, 'newReduce is not running correctly')
