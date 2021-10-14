@@ -2,6 +2,7 @@
 const dummyArray3 = ['jsd', 5, 221, '96', 'pudding']
 const dummyArray2 = [6, 4, 8]
 const dummyArray = [1, 4, -6, 'a', 'jello', 24, false];
+const roundArray = [4, 8, 9, [6, 8, 3, [2, 1, 0, [2, 3]]]] //only for testing flat method, get it?
 const dummyFunction = (element) => element > 0 && typeof element !== 'string'
 
 //basic challenge
@@ -139,7 +140,7 @@ const newFlat = (array, depth) => {
     }
     let newArray = [...array]
     for(let j = 0; j < depth; j++) {
-        let tempArray=[]
+        let tempArray = []
         for (let i = 0; i < newArray.length; i++) {
             if(Array.isArray(newArray[i])) {
                 tempArray.push(...newArray[i])
@@ -178,3 +179,6 @@ console.assert(JSON.stringify(newFilter(dummyArray3, (element) => element % 2 ==
 
 console.log(newReduce(dummyArray3, (a, b) => a + b))
 console.assert(newReduce(dummyArray2, (a, b) => a + b) === 18, 'newReduce is not running correctly')
+
+console.log(newFlat(roundArray, 2))
+console.assert(JSON.stringify(newFlat(roundArray, 3)) === JSON.stringify([4, 8, 9, 6, 8, 3, 2, 1, 0, 2, 3]), 'newFlat is not running correctly')
