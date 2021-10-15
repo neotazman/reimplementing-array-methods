@@ -36,7 +36,7 @@ const newConcat = (array1, array2, ...arrays) => { //loops through all arrays an
     }
 
     for(let i = 0; i < arrays.length; i++) { //rest parameters are for an unknown number of parameters. assisted by elizabeth scheidt
-        if(typeof arrays[i] !== 'object') {
+        if(!Array.isArray(arrays[i])) {
             newArray.push(arrays[i])
         } else {
             for (let j = 0; j < arrays[i].length; j++) {
@@ -163,27 +163,36 @@ const newFlat = (array, depth) => {
 //unit tests
 console.log(newIncludes(dummyArray, 4))
 console.assert(newIncludes(dummyArray, 4) === true, "newIncludes did not return true when the item is in the array")
+console.assert(newIncludes(dummyArray3, 8) === false, "it's returning true when it shouldn't")
 
 console.log(newConcat(dummyArray, dummyArray2))
 console.assert(JSON.stringify(newConcat(dummyArray, dummyArray2)) === JSON.stringify([1, 4, -6, 'a', 'jello', 24, false, 6, 4, 8]), "newConcat did not concatenate the arrays")
+console.assert(JSON.stringify(newConcat(dummyArray2, dummyArray3)) === JSON.stringify([6, 4, 8, 'jsd', 5, 221, '96', 'pudding']), "newConcat did not concatenate the strings")
 
 console.log(newJoin(dummyArray, ', or better yet '))
 console.assert(newJoin(dummyArray2) === '6,4,8', 'newJoin did not output a string')
+console.assert(newJoin(dummyArray3, ', ') === 'jsd, 5, 221, 96, pudding', 'newJoin did not join')
 
 console.log(newSome(dummyArray, (element) => typeof element === 'boolean'))
-console.assert(newSome(dummyArray3, (element) => typeof element === 'string'), 'newSome did not return true when the callback passed')
+console.assert(newSome(dummyArray3, (element) => typeof element === 'string') === true, 'newSome did not return true when the callback passed')
+console.assert(newSome)
 
 console.log(newFindIndex(dummyArray, (element) => element === 'jello'))
 console.assert(newFindIndex(dummyArray3, (element) => element === 'tarzan') === -1, 'newFindIndex did not return -1 when it failed')
+console.assert(newFindIndex(dummyArray3, (element) => element === 'pudding') === 4, "newFindIndex did not return the correct index")
 
 console.log(newMap(dummyArray, (element) => JSON.stringify(element)))
 console.assert(Array.isArray(newMap(dummyArray3, (element) => element % 3 || parseInt(element) || null)), 'newMap did not return an array')
+console.assert(Array.isArray(newMap(dummyArray, (element) => JSON.stringify(element))), "newMap did not return an array")
 
 console.log(newFilter(dummyArray, (element) => typeof element === 'string'))
 console.assert(JSON.stringify(newFilter(dummyArray3, (element) => element % 2 === 1)) === JSON.stringify([5, 221]), 'newFilter did not return a filtered array')
+console.assert(JSON.stringify(newFilter(dummyArray, (element) => typeof element === 'string')) === JSON.stringify(['a', 'jello']), 'newFilter did not filter the array')
 
 console.log(newReduce(dummyArray3, (a, b) => a + b))
 console.assert(newReduce(dummyArray2, (a, b) => a + b) === 18, 'newReduce is not running correctly')
+console.assert(newReduce(dummyArray2, (a, b) => a + 2 * b, 3) === 39, 'newReduce did not run the equation properly')
 
 console.log(newFlat(roundArray, 2))
 console.assert(JSON.stringify(newFlat(roundArray, Infinity)) === JSON.stringify([4, 8, 9, 6, 8, 3, 2, 1, 0, 2, 3]), 'newFlat is not running correctly')
+console.assert(JSON.stringify(newFlat(roundArray, 2)) === JSON.stringify([4, 8, 9, 6, 8, 3, 2, 1, 0, [2, 3]]), "newFlat didn't flatten")
