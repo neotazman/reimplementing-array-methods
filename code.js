@@ -20,7 +20,7 @@ const newIncludes = (array, value, fromIndex) => { //loops through the array to 
 
 const newConcat = (array1, array2, ...arrays) => { //loops through all arrays and adds them to a new array
     let newArray = []
-    if(!Array.isArray(array1)) { //arrays are objects. if it's not an object, the value can be pushed as is
+    if(!Array.isArray(array1)) { //checks if it's an array
         newArray.push(array1)
     } else {
         for (let i = 0; i < array1.length; i++) {
@@ -35,7 +35,7 @@ const newConcat = (array1, array2, ...arrays) => { //loops through all arrays an
         }
     }
 
-    for(let i = 0; i < arrays.length; i++) { //rest parameters are for an unknown number of parameters. assisted by elizabeth scheidt
+    for(let i = 0; i < arrays.length; i++) { //rest parameters are for an unknown number of parameters
         if(!Array.isArray(arrays[i])) {
             newArray.push(arrays[i])
         } else {
@@ -144,21 +144,19 @@ const newFlat = (array, depth) => {
     for(let j = 0; j < depth; j++) { //if depth is 0, it doesn't run
         let tempArray = [] //can't use newArray if i plan on changing it
         for (let i = 0; i < newArray.length; i++) {
-            if(Array.isArray(newArray[i])) { //if it's an array, it spreads the array into the temp array, thanks to elizabeth scheidt for the array checker
+            if(Array.isArray(newArray[i])) { //if it's an array, it spreads the array into the temp array
                 tempArray.push(...newArray[i])
             } else { //if it's not an array, it adds the value normally
                 tempArray.push(newArray[i])
             }
         }
-        newArray = [...tempArray] //sets the new array to the current temp array NOT .push because that will keep adding new values to the array
+        newArray = [...tempArray] //sets the new array to the current temp array, NOT .push because that will keep adding new values to the array
         if(newFindIndex(newArray, (element) => Array.isArray(element)) === -1) {
             break
         }
     }
     return newArray
 }
-
-//[5, 65, 8, 96, 78, 56, 84, 92, [6, 7, 8]] newArray.findIndex((element) => Array.isArray(element))
 
 //unit tests
 console.log(newIncludes(dummyArray, 4))
