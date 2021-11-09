@@ -90,7 +90,7 @@ const newSome = (array, callback) => { //calls the callback for each index of th
     return false //if the entire loop runs without returning true, it returns false
 }
 
-const newFindIndex = (array, callback) => { //calls the callback for each index of the array and returns the index
+const newFindIndex = (array, callback) => { //calls the callback for each index of the array and returns the first index
     for (let i = 0; i < array.length; i++) {
         if(callback(array[i], i, array)) {
             return i
@@ -151,7 +151,7 @@ const newFlat = (array, depth) => {
             }
         }
         newArray = [...tempArray] //sets the new array to the current temp array, NOT .push because that will keep adding new values to the array
-        if(newFindIndex(newArray, (element) => Array.isArray(element)) === -1) {
+        if(newFindIndex(newArray, (element) => Array.isArray(element)) === -1) { //if the depth is higher than the number of times it takes to completely flatten the array, it ends the loop (the depth can be infinity)
             break
         }
     }
